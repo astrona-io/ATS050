@@ -1,25 +1,21 @@
-# Curriculum And Authoring Plan
+# Curriculum Coverage
 
 Exam: Prometheus Certified Associate (PCA). Domain: Instrumentation and Exporters (16%).
-Source: [official curriculum](https://training.linuxfoundation.org/certification/prometheus-certified-associate/), checked 2026-10-10.
-Objectives are attributed to The Linux Foundation and CNCF.
 
-Preparation scaffold; content authoring has not started.
+The [official objectives](https://training.linuxfoundation.org/certification/prometheus-certified-associate/) were checked on 2026-10-11. Teaching structure is independently authored and does not add official requirements.
 
-| Section | Official objective | Authoring status |
+| Section | Official objective | Modules |
 | --- | --- | --- |
-| 010 | Client Libraries | Planned |
-| 020 | Instrumentation | Planned |
-| 030 | Exporters | Planned |
-| 040 | Structuring and naming metrics | Planned |
+| 010 | Client Libraries | 1 |
+| 020 | Instrumentation | 1 |
+| 030 | Exporters | 1 |
+| 040 | Structuring and naming metrics | 1 |
 
-Before building content:
+| Section / module | Module | Teaching files |
+| --- | --- | --- |
+| 010 / 01 | Client Libraries, Registries And Metric Lifecycle | Client Libraries, Registries And Metric Lifecycle |
+| 020 / 01 | Instrumenting Requests, Work Queues And Dependencies | Instrumenting Requests, Work Queues And Dependencies |
+| 030 / 01 | Exporters, Target Failure And Multi-Target Probes | Exporters, Target Failure And Multi-Target Probes |
+| 040 / 01 | Metric Names, Units And Stable Label Design | Metric Names, Units And Stable Label Design |
 
-- Recheck the curriculum and refine broad objectives into teachable modules.
-- Choose and record the environment versions and any image dependencies.
-- Write the introduction and remove placeholder notices only when it is ready.
-- Build short parts and runnable playgrounds; add graded labs where appropriate.
-- Add quizzes and a capstone when the completed domain needs them.
-- Check real outputs and reference solutions, and update `astrona.yaml`.
-- Remove `draft: true` from completed technical pages after review.
-- Publish the course only after the maintainer approves the completed content.
+AUTHORING.yaml records measurable goals and adaptation sources. Every objective retains its section ID. All technical readings remain draft. Question banks are separate from the reading manifest and follow their declared summaries. No labs, playgrounds or runtime validation are included.
