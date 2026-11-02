@@ -1,9 +1,8 @@
-# Reading-only content; YAML knowledge checks have a separate index.
 training:
   id: ATS050
   title: 'PCA: Instrumentation and Exporters'
-  description: 'Detailed reading material and reusable YAML knowledge checks for PCA: Instrumentation
-    and Exporters. Technical content remains draft. No labs or playgrounds.'
+  description: 'Detailed reading material and reusable YAML knowledge checks for PCA:
+    Instrumentation and Exporters. Technical content remains draft. Private playgrounds and draft independent labs are included.'
   certification:
     name: Prometheus Certified Associate
     code: PCA
@@ -35,7 +34,7 @@ modules:
 - id: module-010
   title: Client Libraries
   description: Developed reading and reasoning for Client Libraries.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Client Libraries
@@ -47,12 +46,34 @@ modules:
     title: Client Libraries, Registries And Metric Lifecycle
     path: sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
   - type: reading
+    title: Inspect A Registry Exposed By A Process — Task
+    path: sections/section-010/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Inspect A Registry Exposed By A Process
+    path: sections/section-010/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Evaluate the required expression and preserve its labels, values and evaluation
+      time.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: Inspect A Registry Exposed By A Process — Solution
+    path: sections/section-010/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Inspect A Registry Exposed By A Process'
+    path: sections/section-010/module-01/course-02-guided-practice.md
+  - type: reading
     title: Summary
-    path: sections/section-010/module-01/course-02-summary.md
+    path: sections/section-010/module-01/course-03-summary.md
 - id: module-020
   title: Instrumentation
   description: Developed reading and reasoning for Instrumentation.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Instrumentation
@@ -64,12 +85,34 @@ modules:
     title: Instrumenting Requests, Work Queues And Dependencies
     path: sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
   - type: reading
+    title: Instrument Completion And Duration Together — Task
+    path: sections/section-020/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Instrument Completion And Duration Together
+    path: sections/section-020/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Evaluate the required expression and preserve its labels, values and evaluation
+      time.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: Instrument Completion And Duration Together — Solution
+    path: sections/section-020/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Instrument Completion And Duration Together'
+    path: sections/section-020/module-01/course-02-guided-practice.md
+  - type: reading
     title: Summary
-    path: sections/section-020/module-01/course-02-summary.md
+    path: sections/section-020/module-01/course-03-summary.md
 - id: module-030
   title: Exporters
   description: Developed reading and reasoning for Exporters.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Exporters
@@ -81,12 +124,34 @@ modules:
     title: Exporters, Target Failure And Multi-Target Probes
     path: sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
   - type: reading
+    title: Distinguish Target Health From Application Errors — Task
+    path: sections/section-030/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Distinguish Target Health From Application Errors
+    path: sections/section-030/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Evaluate the required expression and preserve its labels, values and evaluation
+      time.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: Distinguish Target Health From Application Errors — Solution
+    path: sections/section-030/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Distinguish Target Health From Application Errors'
+    path: sections/section-030/module-01/course-02-guided-practice.md
+  - type: reading
     title: Summary
-    path: sections/section-030/module-01/course-02-summary.md
+    path: sections/section-030/module-01/course-03-summary.md
 - id: module-040
   title: Structuring and naming metrics
   description: Developed reading and reasoning for Structuring and naming metrics.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Structuring and naming metrics
@@ -98,5 +163,27 @@ modules:
     title: Metric Names, Units And Stable Label Design
     path: sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
   - type: reading
+    title: Check Units And Bounded Labels — Task
+    path: sections/section-040/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Check Units And Bounded Labels
+    path: sections/section-040/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Evaluate the required expression and preserve its labels, values and evaluation
+      time.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: Check Units And Bounded Labels — Solution
+    path: sections/section-040/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Check Units And Bounded Labels'
+    path: sections/section-040/module-01/course-02-guided-practice.md
+  - type: reading
     title: Summary
-    path: sections/section-040/module-01/course-02-summary.md
+    path: sections/section-040/module-01/course-03-summary.md
