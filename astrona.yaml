@@ -34,7 +34,7 @@ modules:
 - id: module-010
   title: Client Libraries
   description: Developed reading and reasoning for Client Libraries.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Client Libraries
@@ -73,7 +73,7 @@ modules:
 - id: module-020
   title: Instrumentation
   description: Developed reading and reasoning for Instrumentation.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Instrumentation
@@ -112,7 +112,7 @@ modules:
 - id: module-030
   title: Exporters
   description: Developed reading and reasoning for Exporters.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Exporters
@@ -151,7 +151,7 @@ modules:
 - id: module-040
   title: Structuring and naming metrics
   description: Developed reading and reasoning for Structuring and naming metrics.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Structuring and naming metrics
