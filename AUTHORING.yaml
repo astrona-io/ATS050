@@ -1,0 +1,103 @@
+version: 1
+approval: PCA requested 2026-10-11; established reading-only scope
+course:
+  id: ATS050
+  certification:
+    name: Prometheus Certified Associate
+    code: PCA
+    provider: CNCF / Linux Foundation
+    domain: Instrumentation and Exporters
+    weight: 16
+    competencies:
+    - Client Libraries
+    - Instrumentation
+    - Exporters
+    - Structuring and naming metrics
+defaults:
+  playground: false
+  module_lab: false
+  capstone: false
+  section_quiz: false
+  final_quiz: true
+assessment_format: YAML question banks v1, registered in assessments/index.yaml
+sections:
+- id: section-010
+  title: Client Libraries
+  curriculum_item: Client Libraries
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Client Libraries, Registries And Metric Lifecycle
+    objectives:
+    - Explain metric registration and collector responsibilities.
+    - Choose counter, gauge or distribution APIs by semantic intent.
+    - Bound label children and account for process lifecycle.
+    - Evaluate concurrent collection, multi-process support and exposition cost.
+    outline:
+    - Client Libraries, Registries And Metric Lifecycle
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
+      adapted_from: null
+- id: section-020
+  title: Instrumentation
+  curriculum_item: Instrumentation
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Instrumenting Requests, Work Queues And Dependencies
+    objectives:
+    - Define event populations and measurement boundaries.
+    - Choose request, error, duration and saturation evidence.
+    - Instrument success and failure paths without unbounded labels.
+    - Account for nested calls, retries and observer overhead.
+    outline:
+    - Instrumenting Requests, Work Queues And Dependencies
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
+      adapted_from: null
+- id: section-030
+  title: Exporters
+  curriculum_item: Exporters
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Exporters, Target Failure And Multi-Target Probes
+    objectives:
+    - Explain translation from external system state to metrics.
+    - Distinguish exporter scrape health from backend health.
+    - Interpret multi-target exporter request and relabeling responsibilities.
+    - Control collection cost, credentials and partial failure evidence.
+    outline:
+    - Exporters, Target Failure And Multi-Target Probes
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
+      adapted_from: null
+- id: section-040
+  title: Structuring and naming metrics
+  curriculum_item: Structuring and naming metrics
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Metric Names, Units And Stable Label Design
+    objectives:
+    - Name metrics according to quantity and base unit.
+    - Use type suffixes and labels with consistent semantic meaning.
+    - Bound label values and normalize high-cardinality inputs.
+    - Evaluate compatibility when changing instrumentation contracts.
+    outline:
+    - Metric Names, Units And Stable Label Design
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
+      adapted_from: null

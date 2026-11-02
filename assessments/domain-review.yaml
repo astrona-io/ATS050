@@ -1,0 +1,243 @@
+schema_version: 1
+kind: question_bank
+id: ats050-domain-review
+course_id: ATS050
+exam_code: PCA
+status: draft
+provenance: Original practice material; not official examination questions.
+scope:
+  type: domain
+  id: domain-review
+  title: Instrumentation and Exporters
+placement:
+  position: after
+  reading: sections/section-040/module-01/course-02-summary.md
+questions:
+- id: ats050-domain-review-q01
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain metric registration and collector responsibilities.
+  source_readings:
+  - sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
+  prompt: What does a client library supply?
+  options:
+  - id: a
+    text: Supported APIs for metric state and exposition.
+    explanation: It helps implement the measurement contract.
+  - id: b
+    text: Automatic knowledge of every business success criterion.
+    explanation: The application must define those criteria.
+  - id: c
+    text: All alert routing recipients by default.
+    explanation: Notification configuration is separate.
+  correct_option: a
+  explanation: It helps implement the measurement contract.
+- id: ats050-domain-review-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Choose counter, gauge or distribution APIs by semantic intent.
+  source_readings:
+  - sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
+  prompt: Which metric API fits completed-request accumulation?
+  options:
+  - id: a
+    text: A gauge overwritten with an arbitrary request ID.
+    explanation: That does not represent accumulation.
+  - id: b
+    text: A trace span used as the sole numerical series.
+    explanation: Tracing and metrics have different contracts.
+  - id: c
+    text: A counter incremented at the chosen completion point.
+    explanation: The measurement accumulates events.
+  correct_option: c
+  explanation: The measurement accumulates events.
+- id: ats050-domain-review-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Bound label children and account for process lifecycle.
+  source_readings:
+  - sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
+  prompt: Why bound label children in a client?
+  options:
+  - id: a
+    text: Every label automatically expires at request completion.
+    explanation: Lifecycle is not universally automatic.
+  - id: b
+    text: Each distinct label combination can retain state and create series.
+    explanation: Unbounded identifiers increase producer and collector cost.
+  - id: c
+    text: Labels never affect memory.
+    explanation: Libraries commonly hold state for labeled metrics.
+  correct_option: b
+  explanation: Unbounded identifiers increase producer and collector cost.
+- id: ats050-domain-review-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Define event populations and measurement boundaries.
+  source_readings:
+  - sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
+  prompt: Why define the denominator before an error ratio?
+  options:
+  - id: a
+    text: Failures must be a subset of the counted request population.
+    explanation: Otherwise the ratio can describe incompatible events.
+  - id: b
+    text: Any two counters with similar names are interchangeable.
+    explanation: Names do not establish population compatibility.
+  - id: c
+    text: A denominator is unnecessary for a fraction.
+    explanation: A fraction requires a reference population.
+  correct_option: a
+  explanation: Otherwise the ratio can describe incompatible events.
+- id: ats050-domain-review-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Instrument success and failure paths without unbounded labels.
+  source_readings:
+  - sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
+  prompt: Which route label is usually safer for cardinality?
+  options:
+  - id: a
+    text: The full URL with every customer identifier.
+    explanation: That can create an unbounded series population.
+  - id: b
+    text: A new random value for every request.
+    explanation: That creates continual churn.
+  - id: c
+    text: A normalized route template.
+    explanation: It bounds the possible values.
+  correct_option: c
+  explanation: It bounds the possible values.
+- id: ats050-domain-review-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Account for nested calls, retries and observer overhead.
+  source_readings:
+  - sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
+  prompt: Why distinguish retries from original user requests?
+  options:
+  - id: a
+    text: Every retry is a separate customer automatically.
+    explanation: That is a business definition requiring justification.
+  - id: b
+    text: They can create different counting populations.
+    explanation: Dependency attempts may exceed customer operations.
+  - id: c
+    text: Retries never reach an instrumented code path.
+    explanation: They can perform real repeated work.
+  correct_option: b
+  explanation: Dependency attempts may exceed customer operations.
+- id: ats050-domain-review-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain translation from external system state to metrics.
+  source_readings:
+  - sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
+  prompt: What is an exporter chiefly responsible for?
+  options:
+  - id: a
+    text: Translating an external system's state into metrics.
+    explanation: It bridges a system without direct compatible exposition.
+  - id: b
+    text: Defining every service's SLA automatically.
+    explanation: Business objectives are separate.
+  - id: c
+    text: Storing all Prometheus historical blocks.
+    explanation: Storage belongs to the collector or downstream system.
+  correct_option: a
+  explanation: It bridges a system without direct compatible exposition.
+- id: ats050-domain-review-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish exporter scrape health from backend health.
+  source_readings:
+  - sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
+  prompt: An exporter has up equal to one but its backend is unreachable. Is that possible?
+  options:
+  - id: a
+    text: No; up proves every monitored dependency works.
+    explanation: Up describes the selected endpoint's scrape.
+  - id: b
+    text: No; exporters cannot report errors.
+    explanation: Backend error evidence is part of a useful exporter design.
+  - id: c
+    text: Yes; exporter scrape success and backend health differ.
+    explanation: The response can report a backend failure.
+  correct_option: c
+  explanation: The response can report a backend failure.
+- id: ats050-domain-review-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Interpret multi-target exporter request and relabeling responsibilities.
+  source_readings:
+  - sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
+  prompt: Why preserve the probed target's identity in a multi-target setup?
+  options:
+  - id: a
+    text: Labels encrypt probe credentials.
+    explanation: Identity labels are not transport protection.
+  - id: b
+    text: The scraped exporter address alone does not identify the monitored destination.
+    explanation: Queries need to attribute each probe result.
+  - id: c
+    text: Every probe monitors the exporter itself only.
+    explanation: The exporter can act on a supplied destination.
+  correct_option: b
+  explanation: Queries need to attribute each probe result.
+- id: ats050-domain-review-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Name metrics according to quantity and base unit.
+  source_readings:
+  - sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
+  prompt: Which name most clearly describes accumulated requests?
+  options:
+  - id: a
+    text: http_requests_total.
+    explanation: The total suffix supports the counter convention.
+  - id: b
+    text: request_duration_bytes.
+    explanation: It mixes incompatible quantity and unit concepts.
+  - id: c
+    text: arbitrary_metric with changing units.
+    explanation: That hides the measurement contract.
+  correct_option: a
+  explanation: The total suffix supports the counter convention.
+- id: ats050-domain-review-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use type suffixes and labels with consistent semantic meaning.
+  source_readings:
+  - sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
+  prompt: Why prefer seconds and bytes in clear metric names?
+  options:
+  - id: a
+    text: Units determine Kubernetes namespace permissions.
+    explanation: Measurement units do not grant authority.
+  - id: b
+    text: Every dashboard automatically converts undocumented units correctly.
+    explanation: Display cannot reliably infer an unstated contract.
+  - id: c
+    text: Base units make compatible calculations easier to interpret.
+    explanation: The name documents the numerical value's unit.
+  correct_option: c
+  explanation: The name documents the numerical value's unit.
+- id: ats050-domain-review-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Evaluate compatibility when changing instrumentation contracts.
+  source_readings:
+  - sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
+  prompt: What must be reviewed when a label contract changes?
+  options:
+  - id: a
+    text: Nothing because historical data is rewritten automatically.
+    explanation: Stored history keeps its original identity.
+  - id: b
+    text: Queries, recording rules and alerts relying on that identity.
+    explanation: Label changes can create new series and alter matching.
+  - id: c
+    text: Only the repository's display name.
+    explanation: Consumers depend on metric identity rather than presentation alone.
+  correct_option: b
+  explanation: Label changes can create new series and alter matching.
