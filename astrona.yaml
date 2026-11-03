@@ -32,158 +32,414 @@ modules:
     title: How This Course Is Made
     path: sections/intro/course-03-how-this-course-is-made.md
 - id: module-010
-  title: Client Libraries
-  description: Developed reading and reasoning for Client Libraries.
-  maturity: alpha
+  title: 'Client Libraries'
+  description: 'Client libraries, metric types and the text exposition format.'
+  status: alpha
   content:
   - type: reading
-    title: Client Libraries
+    title: 'Client Libraries'
     path: sections/section-010/README.md
   - type: reading
-    title: Client Libraries, Registries And Metric Lifecycle
+    title: 'Client Libraries, Registries And Metric Lifecycle'
     path: sections/section-010/module-01/course.md
   - type: reading
-    title: Client Libraries, Registries And Metric Lifecycle
-    path: sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
+    title: 'Defining The Measurement Before The API Call'
+    path: sections/section-010/module-01/course-01-defining-the-measurement.md
   - type: reading
-    title: Inspect A Registry Exposed By A Process — Task
+    title: 'Registries, Metric Families And Label Children'
+    path: sections/section-010/module-01/course-02-registries-and-label-children.md
+  - type: reading
+    title: 'Process Lifecycle, Multiple Workers And Safe Collection'
+    path: sections/section-010/module-01/course-03-process-lifecycle-and-safe-collection.md
+  - type: reading
+    title: 'Inspect A Registry Exposed By A Process — Task'
     path: sections/section-010/module-01/labs/lab-01/question.md
   - type: lab
-    title: Inspect A Registry Exposed By A Process
+    title: 'Inspect A Registry Exposed By A Process'
     path: sections/section-010/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: promql
     task_kind: build
     learning_goals:
-    - Evaluate the required expression and preserve its labels, values and evaluation
-      time.
+    - Read the registry output of a running process and identify its metrics.
     tags:
     - pca
     - promql
   - type: reading
-    title: Inspect A Registry Exposed By A Process — Solution
+    title: 'Inspect A Registry Exposed By A Process — Solution'
     path: sections/section-010/module-01/labs/lab-01/solution.md
   - type: reading
-    title: 'Guided Practice: Inspect A Registry Exposed By A Process'
-    path: sections/section-010/module-01/course-02-guided-practice.md
+    title: 'Guided Practice: Read A Live Metrics Endpoint'
+    path: sections/section-010/module-01/course-04-guided-practice.md
   - type: reading
-    title: Summary
-    path: sections/section-010/module-01/course-03-summary.md
+    title: 'Summary'
+    path: sections/section-010/module-01/course-05-summary.md
+  - type: reading
+    title: 'Metric Types And The Text Exposition Format'
+    path: sections/section-010/module-02/course.md
+  - type: reading
+    title: 'The Four Core Metric Types'
+    path: sections/section-010/module-02/course-01-the-four-core-metric-types.md
+  - type: reading
+    title: 'Histograms And Summaries In Detail'
+    path: sections/section-010/module-02/course-02-histograms-and-summaries.md
+  - type: reading
+    title: 'The Text Exposition Format And Format Negotiation'
+    path: sections/section-010/module-02/course-03-text-exposition-format.md
+  - type: reading
+    title: 'Read The Types And Buckets Of A Live Endpoint — Task'
+    path: sections/section-010/module-02/labs/lab-01/question.md
+  - type: lab
+    title: 'Read The Types And Buckets Of A Live Endpoint'
+    path: sections/section-010/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 30m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Identify metric types and histogram buckets from live endpoint output.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: 'Read The Types And Buckets Of A Live Endpoint — Solution'
+    path: sections/section-010/module-02/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Types, Buckets And Rates On A Live Endpoint'
+    path: sections/section-010/module-02/course-04-guided-practice.md
+  - type: reading
+    title: 'Summary'
+    path: sections/section-010/module-02/course-05-summary.md
+  - type: reading
+    title: 'Client Libraries Capstone — Task'
+    path: sections/section-010/capstone/labs/lab-01/question.md
+  - type: lab
+    title: 'Client Libraries Capstone'
+    path: sections/section-010/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 45m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Repair an endpoint that breaks the type, naming and exposition rules.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: 'Client Libraries Capstone — Solution'
+    path: sections/section-010/capstone/labs/lab-01/solution.md
+  - type: quiz
+    title: 'Knowledge Check: Client Libraries'
+    path: sections/section-010/quiz.yaml
+    pass_score: 70
 - id: module-020
-  title: Instrumentation
-  description: Developed reading and reasoning for Instrumentation.
-  maturity: alpha
+  title: 'Instrumentation'
+  description: 'What to instrument, and reporting from batch jobs through the Pushgateway.'
+  status: alpha
   content:
   - type: reading
-    title: Instrumentation
+    title: 'Instrumentation'
     path: sections/section-020/README.md
   - type: reading
-    title: Instrumenting Requests, Work Queues And Dependencies
+    title: 'Instrumenting Requests, Work Queues And Dependencies'
     path: sections/section-020/module-01/course.md
   - type: reading
-    title: Instrumenting Requests, Work Queues And Dependencies
-    path: sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
+    title: 'What To Instrument In Each Kind Of System'
+    path: sections/section-020/module-01/course-01-what-to-instrument.md
   - type: reading
-    title: Instrument Completion And Duration Together — Task
+    title: 'Request Metrics: Rate, Errors And Duration'
+    path: sections/section-020/module-01/course-02-request-metrics.md
+  - type: reading
+    title: 'Queues, Workers And Dependencies'
+    path: sections/section-020/module-01/course-03-queues-workers-and-dependencies.md
+  - type: reading
+    title: 'Instrument Completion And Duration Together — Task'
     path: sections/section-020/module-01/labs/lab-01/question.md
   - type: lab
-    title: Instrument Completion And Duration Together
+    title: 'Instrument Completion And Duration Together'
     path: sections/section-020/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: promql
     task_kind: build
     learning_goals:
-    - Evaluate the required expression and preserve its labels, values and evaluation
-      time.
+    - Measure completion and duration of the same work with live queries.
     tags:
     - pca
     - promql
   - type: reading
-    title: Instrument Completion And Duration Together — Solution
+    title: 'Instrument Completion And Duration Together — Solution'
     path: sections/section-020/module-01/labs/lab-01/solution.md
   - type: reading
-    title: 'Guided Practice: Instrument Completion And Duration Together'
-    path: sections/section-020/module-01/course-02-guided-practice.md
+    title: 'Guided Practice: Rate, Errors, Duration And Last Success'
+    path: sections/section-020/module-01/course-04-guided-practice.md
   - type: reading
-    title: Summary
-    path: sections/section-020/module-01/course-03-summary.md
+    title: 'Summary'
+    path: sections/section-020/module-01/course-05-summary.md
+  - type: reading
+    title: 'Batch Jobs And The Pushgateway'
+    path: sections/section-020/module-02/course.md
+  - type: reading
+    title: 'Why Pull Fails For Batch Jobs'
+    path: sections/section-020/module-02/course-01-why-pull-fails-for-batch-jobs.md
+  - type: reading
+    title: 'Groups, HTTP Methods And Scraping The Pushgateway'
+    path: sections/section-020/module-02/course-02-groups-and-http-methods.md
+  - type: reading
+    title: 'Operating Limits And Cleanup'
+    path: sections/section-020/module-02/course-03-limits-and-cleanup.md
+  - type: reading
+    title: 'Report A Batch Job Through The Pushgateway — Task'
+    path: sections/section-020/module-02/labs/lab-01/question.md
+  - type: lab
+    title: 'Report A Batch Job Through The Pushgateway'
+    path: sections/section-020/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 30m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Push the result of a batch job and verify the stored group.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: 'Report A Batch Job Through The Pushgateway — Solution'
+    path: sections/section-020/module-02/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Push, Replace And Delete Groups'
+    path: sections/section-020/module-02/course-04-guided-practice.md
+  - type: reading
+    title: 'Summary'
+    path: sections/section-020/module-02/course-05-summary.md
+  - type: reading
+    title: 'Pushgateway Capstone — Task'
+    path: sections/section-020/capstone/labs/lab-01/question.md
+  - type: lab
+    title: 'Pushgateway Capstone'
+    path: sections/section-020/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 45m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Push, replace and clean up metric groups through the Pushgateway.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: 'Pushgateway Capstone — Solution'
+    path: sections/section-020/capstone/labs/lab-01/solution.md
+  - type: quiz
+    title: 'Knowledge Check: Instrumentation'
+    path: sections/section-020/quiz.yaml
+    pass_score: 70
 - id: module-030
-  title: Exporters
-  description: Developed reading and reasoning for Exporters.
-  maturity: alpha
+  title: 'Exporters'
+  description: 'Exporters, scrape health, multi-target probes and the Node Exporter textfile collector.'
+  status: alpha
   content:
   - type: reading
-    title: Exporters
+    title: 'Exporters'
     path: sections/section-030/README.md
   - type: reading
-    title: Exporters, Target Failure And Multi-Target Probes
+    title: 'Exporters, Target Failure And Multi-Target Probes'
     path: sections/section-030/module-01/course.md
   - type: reading
-    title: Exporters, Target Failure And Multi-Target Probes
-    path: sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
+    title: 'Translating State Into Metrics'
+    path: sections/section-030/module-01/course-01-translating-state-into-metrics.md
   - type: reading
-    title: Distinguish Target Health From Application Errors — Task
+    title: 'Scrape Health, Backend Health And Diagnosis'
+    path: sections/section-030/module-01/course-02-scrape-health-and-diagnosis.md
+  - type: reading
+    title: 'Multi-Target Exporters, Credentials And Cost'
+    path: sections/section-030/module-01/course-03-multi-target-exporters-and-credentials.md
+  - type: reading
+    title: 'Distinguish Target Health From Application Errors — Task'
     path: sections/section-030/module-01/labs/lab-01/question.md
   - type: lab
-    title: Distinguish Target Health From Application Errors
+    title: 'Distinguish Target Health From Application Errors'
     path: sections/section-030/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: promql
     task_kind: build
     learning_goals:
-    - Evaluate the required expression and preserve its labels, values and evaluation
-      time.
+    - Show that a healthy scrape can hide failing work.
     tags:
     - pca
     - promql
   - type: reading
-    title: Distinguish Target Health From Application Errors — Solution
+    title: 'Distinguish Target Health From Application Errors — Solution'
     path: sections/section-030/module-01/labs/lab-01/solution.md
   - type: reading
-    title: 'Guided Practice: Distinguish Target Health From Application Errors'
-    path: sections/section-030/module-01/course-02-guided-practice.md
+    title: 'Guided Practice: Scrape Health Versus Application Health'
+    path: sections/section-030/module-01/course-04-guided-practice.md
   - type: reading
-    title: Summary
-    path: sections/section-030/module-01/course-03-summary.md
+    title: 'Summary'
+    path: sections/section-030/module-01/course-05-summary.md
+  - type: reading
+    title: 'Node Exporter And The Textfile Collector'
+    path: sections/section-030/module-02/course.md
+  - type: reading
+    title: 'The Node Exporter And The Textfile Collector'
+    path: sections/section-030/module-02/course-01-node-exporter-and-the-textfile-collector.md
+  - type: reading
+    title: 'Writing And Publishing Metric Files'
+    path: sections/section-030/module-02/course-02-writing-and-publishing-metric-files.md
+  - type: reading
+    title: 'Operating The Node Exporter And Choosing The Right Tool'
+    path: sections/section-030/module-02/course-03-operating-the-exporter-and-choosing-tools.md
+  - type: reading
+    title: 'Publish Backup Metrics Through The Textfile Collector — Task'
+    path: sections/section-030/module-02/labs/lab-01/question.md
+  - type: lab
+    title: 'Publish Backup Metrics Through The Textfile Collector'
+    path: sections/section-030/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 30m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Write a metric file that the Node Exporter textfile collector serves.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: 'Publish Backup Metrics Through The Textfile Collector — Solution'
+    path: sections/section-030/module-02/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Publish, Break And Repair A Metric File'
+    path: sections/section-030/module-02/course-04-guided-practice.md
+  - type: reading
+    title: 'Summary'
+    path: sections/section-030/module-02/course-05-summary.md
+  - type: reading
+    title: 'Exporters Capstone — Task'
+    path: sections/section-030/capstone/labs/lab-01/question.md
+  - type: lab
+    title: 'Exporters Capstone'
+    path: sections/section-030/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 45m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Repair a textfile metric and add multi-target probes through the Blackbox Exporter.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: 'Exporters Capstone — Solution'
+    path: sections/section-030/capstone/labs/lab-01/solution.md
+  - type: quiz
+    title: 'Knowledge Check: Exporters'
+    path: sections/section-030/quiz.yaml
+    pass_score: 70
 - id: module-040
-  title: Structuring and naming metrics
-  description: Developed reading and reasoning for Structuring and naming metrics.
-  maturity: alpha
+  title: 'Structuring and naming metrics'
+  description: 'Metric names, units, label design and cardinality control.'
+  status: alpha
   content:
   - type: reading
-    title: Structuring and naming metrics
+    title: 'Structuring and naming metrics'
     path: sections/section-040/README.md
   - type: reading
-    title: Metric Names, Units And Stable Label Design
+    title: 'Metric Names, Units And Stable Label Design'
     path: sections/section-040/module-01/course.md
   - type: reading
-    title: Metric Names, Units And Stable Label Design
-    path: sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
+    title: 'Names, Units And Suffixes'
+    path: sections/section-040/module-01/course-01-names-units-and-suffixes.md
   - type: reading
-    title: Check Units And Bounded Labels — Task
+    title: 'Label Design And Info Metrics'
+    path: sections/section-040/module-01/course-02-label-design-and-info-metrics.md
+  - type: reading
+    title: 'Changing Names And Reviewing Instrumentation'
+    path: sections/section-040/module-01/course-03-changing-names-and-reviewing-instrumentation.md
+  - type: reading
+    title: 'Check Units And Bounded Labels — Task'
     path: sections/section-040/module-01/labs/lab-01/question.md
   - type: lab
-    title: Check Units And Bounded Labels
+    title: 'Check Units And Bounded Labels'
     path: sections/section-040/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: promql
     task_kind: build
     learning_goals:
-    - Evaluate the required expression and preserve its labels, values and evaluation
-      time.
+    - Check duration names and bounded status labels against live data.
     tags:
     - pca
     - promql
   - type: reading
-    title: Check Units And Bounded Labels — Solution
+    title: 'Check Units And Bounded Labels — Solution'
     path: sections/section-040/module-01/labs/lab-01/solution.md
   - type: reading
-    title: 'Guided Practice: Check Units And Bounded Labels'
-    path: sections/section-040/module-01/course-02-guided-practice.md
+    title: 'Guided Practice: Review The Probe Metrics Against The Rules'
+    path: sections/section-040/module-01/course-04-guided-practice.md
   - type: reading
-    title: Summary
-    path: sections/section-040/module-01/course-03-summary.md
+    title: 'Summary'
+    path: sections/section-040/module-01/course-05-summary.md
+  - type: reading
+    title: 'Labels And Cardinality'
+    path: sections/section-040/module-02/course.md
+  - type: reading
+    title: 'What Cardinality Is And What It Costs'
+    path: sections/section-040/module-02/course-01-what-cardinality-is-and-what-it-costs.md
+  - type: reading
+    title: 'Finding High Cardinality'
+    path: sections/section-040/module-02/course-02-finding-high-cardinality.md
+  - type: reading
+    title: 'Controlling Cardinality'
+    path: sections/section-040/module-02/course-03-controlling-cardinality.md
+  - type: reading
+    title: 'Remove An Unbounded Label And Fix Metric Names — Task'
+    path: sections/section-040/module-02/labs/lab-01/question.md
+  - type: lab
+    title: 'Remove An Unbounded Label And Fix Metric Names'
+    path: sections/section-040/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 30m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Remove an unbounded label and rename metrics in a running application.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: 'Remove An Unbounded Label And Fix Metric Names — Solution'
+    path: sections/section-040/module-02/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Find And Limit A High Cardinality Target'
+    path: sections/section-040/module-02/course-04-guided-practice.md
+  - type: reading
+    title: 'Summary'
+    path: sections/section-040/module-02/course-05-summary.md
+  - type: reading
+    title: 'Metric Design And Cardinality Capstone — Task'
+    path: sections/section-040/capstone/labs/lab-01/question.md
+  - type: lab
+    title: 'Metric Design And Cardinality Capstone'
+    path: sections/section-040/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 45m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Fix the metric design of an application and protect Prometheus with a sample limit.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: 'Metric Design And Cardinality Capstone — Solution'
+    path: sections/section-040/capstone/labs/lab-01/solution.md
+  - type: quiz
+    title: 'Knowledge Check: Structuring and naming metrics'
+    path: sections/section-040/quiz.yaml
+    pass_score: 70
+  - type: quiz
+    title: "Final Knowledge Check: Instrumentation and Exporters"
+    path: sections/final-domain-quiz.yaml
+    pass_score: 70

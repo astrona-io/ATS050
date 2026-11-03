@@ -29,3 +29,14 @@ ID, not display position, so a later renderer can shuffle choices safely.
 
 The banks contain answer keys and are public learning material, so this is not
 a secure examination bank. Do not treat scores as an official PCA result.
+
+## Hands-On Coverage
+
+This course has 4 ungraded playgrounds and 4 independent draft labs. Tasks, launch entries and solutions follow their teaching reading. Guided practice precedes the summary. Static and offline checks are separate from live execution, which remains pending.
+
+| Module | Labs in reading order |
+| --- | --- |
+| 010/01 | Inspect A Registry Exposed By A Process |
+| 020/01 | Instrument Completion And Duration Together |
+| 030/01 | Distinguish Target Health From Application Errors |
+| 040/01 | Check Units And Bounded Labels |

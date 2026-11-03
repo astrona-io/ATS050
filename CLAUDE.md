@@ -203,20 +203,16 @@ The course covers **Instrumentation and Exporters**, worth **16%** of
 **Prometheus Certified Associate (PCA)**. It is part of **ATP010**.
 The official objectives are listed in `astrona.yaml` and mapped in `CURRICULUM.md`.
 
-### Reading-only scope
+### Playground and graded lab scope
 
-The maintainer approved the lesson plan, asked for deeper teaching, and explicitly
-requested **no labs or playgrounds**. That instruction overrides shared examples
-about hands-on environments, graded labs and playground markers. Do not create
-runtime configurations, executable exercises or playground lifecycle markers.
-The course must be usable without a cluster or installed command-line tools.
+The maintainer requested playgrounds and graded labs on 2026-10-13. This supersedes the earlier reading-only instruction. Each active module has one private ungraded environment and guided practice. Register each independent graded task, launch entry and solution directly after the reading it practises. Retain draft technical pages and the existing question banks. Use context guards and bounded waits; node commands may target only this environment's containers. Record static, offline and live evidence separately.
 
 ### Teaching structure and depth
 
 Every section begins with its own introduction and measurable learning outcomes.
 Every module contains a landing page, developed teaching lessons and a final
 `# Summary` page. Put the summary after all its lessons and before the next
-module. This reading-only summary has no playground destruction marker.
+module. The summary ends with <!-- astrona:playground:destroy --> on its own line.
 
 Explain mechanisms, responsible components, realistic examples and the limits
 of each claim. Include worked reasoning and relevant failure cases. Avoid thin
@@ -248,4 +244,26 @@ The ATP registration remains draft until publication is approved.
 Primary author sources are recorded in `SOURCES.md`. The objective list was
 verified on 2026-10-11. Detailed reading expansions were written on 2026-10-11.
 Validate manifest paths, summary ordering, curriculum coverage and question
-contracts. Do not claim runtime verification for a reading-only course.
+contracts. Do not claim live verification until the actual runtime result has been recorded.
+
+## Course layout and build status
+
+- Four sections (010 Client Libraries, 020 Instrumentation, 030 Exporters, 040
+  Structuring and naming metrics). Each section has two modules, a capstone
+  lab and a `quiz.yaml`. `sections/final-domain-quiz.yaml` covers the whole
+  domain.
+- Each module has a landing `course.md`, three parts (`course-01` to
+  `course-03`), `course-04-guided-practice.md`, `course-05-summary.md`, a
+  playground and one graded lab (`labs/lab-01`). The guided practice is
+  copied to `playground/docs/overview.md`; keep the two in sync.
+- Labs and playgrounds run on kind with a shared fixture: the `probe` app,
+  Prometheus v3.5.5 with `--web.enable-lifecycle`, a traffic generator, and
+  the pods `shuttle` and `drifter`. Names: playground
+  `ats-050-playground-0X0-0N`, module lab `ats-050-lab-0X0-0N-01`, capstone
+  `ats-050-lab-0X0-cap-01`.
+- Every lab and playground is UNTESTED. Only static checks were run
+  (`astrona validate -c`, `bash -n`, YAML parsing). Do not claim live results.
+- Facts about Prometheus, the Pushgateway, the Node Exporter and the Blackbox
+  Exporter were written from knowledge and not re-verified against the
+  official documentation in the build session.
+- Progress is recorded in `.astrona/build-state.yaml`.

@@ -1,0 +1,289 @@
+# Final knowledge check across all four sections. Listed in astrona.yaml as the last `type: quiz` entry.
+schema_version: 1
+kind: question_bank
+id: ats050-final
+course_id: ATS050
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: domain
+  id: instrumentation-and-exporters
+  title: "Instrumentation and Exporters"
+questions:
+  - id: ats050-final-q01
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Explain what the registry enforces and why metrics are created once"
+    source_readings:
+      - sections/section-010/module-01/course-02-registries-and-label-children.md
+    prompt: "A request handler creates and registers a new counter named `jobs_total` every time it runs. What happens?"
+    options:
+      - id: a
+        text: "Each call creates a separate series with the same name."
+        explanation: "The registry does not allow two families with the same name and an identical definition."
+      - id: b
+        text: "The second registration fails with a duplicate registration error."
+        explanation: "Correct. The first call registers the family. Later calls collide with it."
+      - id: c
+        text: "The library merges the counters."
+        explanation: "Libraries do not merge duplicate registrations."
+      - id: d
+        text: "Prometheus rejects the target."
+        explanation: "The failure happens in the application, before Prometheus is involved."
+    correct_option: b
+    explanation: "Create each metric once at start-up and reuse the object."
+
+  - id: ats050-final-q02
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Choose a design for a Python server with several worker processes"
+    source_readings:
+      - sections/section-010/module-01/course-03-process-lifecycle-and-safe-collection.md
+    prompt: "A Python server runs four worker processes. Two consecutive scrapes show a counter going from 500 to 300 and back to 510. What explains this?"
+    options:
+      - id: a
+        text: "Each scrape reached a different worker with its own registry."
+        explanation: "Correct. Without multiprocess support, one worker answers each scrape with only its own values."
+      - id: b
+        text: "The counter type does not support concurrency."
+        explanation: "Counters are thread safe. The cause is separate process memory."
+      - id: c
+        text: "Prometheus randomizes sample values."
+        explanation: "Prometheus stores what it scrapes."
+      - id: d
+        text: "The histogram buckets were reset."
+        explanation: "No histogram is involved in the description."
+    correct_option: a
+    explanation: "Use the library multiprocess mode or a scrape target for each worker."
+
+  - id: ats050-final-q03
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Read the text exposition format and identify what breaks a scrape"
+    source_readings:
+      - sections/section-010/module-02/course-03-text-exposition-format.md
+    prompt: "A response contains the line `shop_orders_total{channel=\"web\"} twelve`. What does Prometheus do?"
+    options:
+      - id: a
+        text: "It stores the value as 0."
+        explanation: "Prometheus does not guess a number."
+      - id: b
+        text: "It fails the scrape, and the target is marked as down for that interval."
+        explanation: "Correct. A line that cannot be parsed breaks the scrape."
+      - id: c
+        text: "It skips only that line."
+        explanation: "The parser treats the response as invalid."
+      - id: d
+        text: "It converts the value to a string label."
+        explanation: "Values must be floats."
+    correct_option: b
+    explanation: "The format is strict. One bad line fails the whole scrape."
+
+  - id: ats050-final-q04
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Choose the counting point for a request counter"
+    source_readings:
+      - sections/section-020/module-01/course-01-what-to-instrument.md
+      - sections/section-020/module-01/course-02-request-metrics.md
+    prompt: "A request counter is incremented only at the end of the success branch of a handler. What is wrong with the metric `requests_total`?"
+    options:
+      - id: a
+        text: "Nothing. Counters should count successes only."
+        explanation: "A total that excludes failures reports a smaller population than its name states."
+      - id: b
+        text: "It reports fewer requests than were handled, because failed requests are not counted."
+        explanation: "Correct. The name promises all requests, and the code counts only successes."
+      - id: c
+        text: "It must be a gauge."
+        explanation: "The value only grows, so a counter is the right type."
+      - id: d
+        text: "It cannot be scraped."
+        explanation: "The endpoint can expose it. The problem is the meaning of the value."
+    correct_option: b
+    explanation: "Count at completion, on every path, and put the outcome in a bounded label."
+
+  - id: ats050-final-q05
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Interpret queue depth together with drain rate"
+    source_readings:
+      - sections/section-020/module-01/course-03-queues-workers-and-dependencies.md
+    prompt: "A queue depth gauge shows 100 items. What else is needed to judge whether this is a problem?"
+    options:
+      - id: a
+        text: "Nothing, because 100 is always too high."
+        explanation: "The same depth can be harmless or serious depending on the speed of the workers."
+      - id: b
+        text: "The rates of added and finished items, and the waiting time."
+        explanation: "Correct. They show how fast the queue drains and what users experience."
+      - id: c
+        text: "The version of the client library."
+        explanation: "The version does not tell whether the queue drains."
+      - id: d
+        text: "The number of labels on the gauge."
+        explanation: "Labels do not describe the drain speed."
+    correct_option: b
+    explanation: "Depth without flow and waiting time cannot separate a healthy backlog from a stuck queue."
+
+  - id: ats050-final-q06
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Explain honor_labels for the Pushgateway scrape job"
+    source_readings:
+      - sections/section-020/module-02/course-02-groups-and-http-methods.md
+    prompt: "Queries for `{job=\"nightly_backup\"}` return nothing, but `{exported_job=\"nightly_backup\"}` returns the data. What is the cause?"
+    options:
+      - id: a
+        text: "The job pushed the wrong metric type."
+        explanation: "The metric type does not rename labels."
+      - id: b
+        text: "The scrape job for the Pushgateway lacks `honor_labels: true`."
+        explanation: "Correct. Prometheus kept its own `job` label and renamed the scraped one."
+      - id: c
+        text: "The Pushgateway expired the group."
+        explanation: "The Pushgateway does not expire groups, and the data is present under another label."
+      - id: d
+        text: "The body had no final newline."
+        explanation: "Such a push would have been refused and no data would exist."
+    correct_option: b
+    explanation: "Set `honor_labels: true` so that the pushed job and instance labels are kept."
+
+  - id: ats050-final-q07
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Convert units to base units in an exporter"
+    source_readings:
+      - sections/section-030/module-01/course-01-translating-state-into-metrics.md
+    prompt: "A tool reports a size of 700 megabytes. Which metric design follows the naming rules for exporters?"
+    options:
+      - id: a
+        text: "`backup_size_mb 700`"
+        explanation: "The unit should be a base unit."
+      - id: b
+        text: "`backup_size_bytes 734003200`"
+        explanation: "Correct. The exporter converts to bytes and puts the unit in the name."
+      - id: c
+        text: "`backup_size 700`"
+        explanation: "The unit is missing from the name and the value uses a non-base unit."
+      - id: d
+        text: "`backup_size_megabytes 700`"
+        explanation: "Megabytes are not a base unit."
+    correct_option: b
+    explanation: "Use seconds and bytes, and put the unit in the metric name."
+
+  - id: ats050-final-q08
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Detect a target that disappeared"
+    source_readings:
+      - sections/section-030/module-01/course-02-scrape-health-and-diagnosis.md
+    prompt: "A target was removed from the scrape configuration by mistake. Which expression fires an alert?"
+    options:
+      - id: a
+        text: "`up == 0`"
+        explanation: "The removed target has no `up` series, so the comparison returns nothing."
+      - id: b
+        text: "`absent(up{job=\"name\"})`"
+        explanation: "Correct. It returns 1 when no series matches the selector."
+      - id: c
+        text: "`rate(up[5m]) == 0`"
+        explanation: "Rate does not detect a missing series."
+      - id: d
+        text: "`up > 1`"
+        explanation: "`up` is never above 1."
+    correct_option: b
+    explanation: "Use `absent()` for something that must exist."
+
+  - id: ats050-final-q09
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Publish a file without a partial read"
+    source_readings:
+      - sections/section-030/module-02/course-02-writing-and-publishing-metric-files.md
+    prompt: "How should a script publish `backup.prom` so that a scrape never reads a half-written file?"
+    options:
+      - id: a
+        text: "Write directly to `backup.prom` and flush often."
+        explanation: "A scrape can still read the file during the write."
+      - id: b
+        text: "Write a temporary file in the same directory and rename it to `backup.prom`."
+        explanation: "Correct. A rename in one file system is atomic."
+      - id: c
+        text: "Write the file in another file system and copy it."
+        explanation: "A copy is not atomic."
+      - id: d
+        text: "Delete the file, then write it again."
+        explanation: "A scrape between the two steps sees no file or a partial one."
+    correct_option: b
+    explanation: "Temporary name in the same directory, then rename."
+
+  - id: ats050-final-q10
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Recognize an unbounded label"
+    source_readings:
+      - sections/section-040/module-01/course-02-label-design-and-info-metrics.md
+    prompt: "Which label is the most dangerous on a request counter?"
+    options:
+      - id: a
+        text: "`method` with the values GET and POST."
+        explanation: "The set is small and fixed."
+      - id: b
+        text: "`status_class` with five values."
+        explanation: "The set is small and fixed."
+      - id: c
+        text: "`route` with the template of the matched route."
+        explanation: "A template has a bounded set of values."
+      - id: d
+        text: "`user_id` with the identifier of each user."
+        explanation: "Correct. The set grows with every new user and never stops."
+    correct_option: d
+    explanation: "Label values must come from a small set that is known in advance."
+
+  - id: ats050-final-q11
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Name a recording rule"
+    source_readings:
+      - sections/section-040/module-01/course-03-changing-names-and-reviewing-instrumentation.md
+    prompt: "Which name follows the convention for a recording rule that sums the request rate by route over five minutes?"
+    options:
+      - id: a
+        text: "`route:lab_requests:rate5m`"
+        explanation: "Correct. The labels, the source metric and the operation are separated by colons."
+      - id: b
+        text: "`lab_requests_total_rate`"
+        explanation: "It does not show the kept labels and it keeps a misleading `_total`."
+      - id: c
+        text: "`rate5m`"
+        explanation: "It does not say which metric it comes from."
+      - id: d
+        text: "`lab-requests-route`"
+        explanation: "Hyphens are not valid in metric names."
+    correct_option: a
+    explanation: "Use level, metric and operation, and drop `_total` after `rate()`."
+
+  - id: ats050-final-q12
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Find the metric with the most series"
+    source_readings:
+      - sections/section-040/module-02/course-02-finding-high-cardinality.md
+    prompt: "Which tool lists the metric names and label names with the most series in the head block?"
+    options:
+      - id: a
+        text: "The `up` metric."
+        explanation: "`up` shows only whether a scrape succeeded."
+      - id: b
+        text: "The endpoint `/api/v1/status/tsdb`."
+        explanation: "Correct. It returns the top lists by series count and by label value count."
+      - id: c
+        text: "The endpoint `/-/ready`."
+        explanation: "It reports readiness only."
+      - id: d
+        text: "The query `rate(up[5m])`."
+        explanation: "It does not count series."
+    correct_option: b
+    explanation: "Use the TSDB status API to find the metric and label to fix."

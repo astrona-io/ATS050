@@ -18,4 +18,15 @@ The [official objectives](https://training.linuxfoundation.org/certification/pro
 | 030 / 01 | Exporters, Target Failure And Multi-Target Probes | Exporters, Target Failure And Multi-Target Probes |
 | 040 / 01 | Metric Names, Units And Stable Label Design | Metric Names, Units And Stable Label Design |
 
-AUTHORING.yaml records measurable goals and adaptation sources. Every objective retains its section ID. All technical readings remain draft. Question banks are separate from the reading manifest and follow their declared summaries. No labs, playgrounds or runtime validation are included.
+AUTHORING.yaml records measurable goals and adaptation sources. Every objective retains its section ID. All technical readings remain draft. Question banks are separate from the reading manifest and follow their declared summaries. Private playgrounds and independent labs are included. Live verification is recorded separately.
+
+## Hands-On Coverage
+
+This course has 4 ungraded playgrounds and 4 independent draft labs. Tasks, launch entries and solutions follow their teaching reading. Guided practice precedes the summary. Static and offline checks are separate from live execution, which remains pending.
+
+| Module | Labs in reading order |
+| --- | --- |
+| 010/01 | Inspect A Registry Exposed By A Process |
+| 020/01 | Instrument Completion And Duration Together |
+| 030/01 | Distinguish Target Health From Application Errors |
+| 040/01 | Check Units And Bounded Labels |

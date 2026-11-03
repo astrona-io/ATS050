@@ -1,0 +1,288 @@
+# Knowledge check for section 040. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats050-040
+course_id: ATS050
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: section
+  id: section-040
+  title: "Structuring and naming metrics"
+questions:
+  - id: ats050-040-q01
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Name a metric with a base unit and the correct suffix"
+    source_readings:
+      - sections/section-040/module-01/course-01-names-units-and-suffixes.md
+    prompt: "A service counts the bytes that it has sent since start-up. Which name follows the conventions?"
+    options:
+      - id: a
+        text: "`bytesSent`"
+        explanation: "The name is in camel case and has no unit word or counter suffix."
+      - id: b
+        text: "`shop_sent_kilobytes`"
+        explanation: "Kilobytes are not a base unit and the counter suffix is missing."
+      - id: c
+        text: "`shop_sent_bytes_total`"
+        explanation: "Correct. The base unit comes before the suffix `_total` for a counter."
+      - id: d
+        text: "`shop_total_bytes_sent_mb`"
+        explanation: "The unit is not a base unit and `_total` is not the last part."
+    correct_option: c
+    explanation: "Use the application prefix, a base unit and `_total` for counters."
+
+  - id: ats050-040-q02
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Choose a label or a separate metric"
+    source_readings:
+      - sections/section-040/module-01/course-02-label-design-and-info-metrics.md
+    prompt: "A queue has a number of items and a size in bytes. How should they be exposed?"
+    options:
+      - id: a
+        text: "One metric with a label `kind` that has the values `items` and `bytes`."
+        explanation: "The sum over the label would add different units."
+      - id: b
+        text: "Two separate metrics, one for items and one with `_bytes`."
+        explanation: "Correct. The quantities have different units, so they need different metrics."
+      - id: c
+        text: "One metric that holds the items and the bytes in the help text."
+        explanation: "Help text is not a value."
+      - id: d
+        text: "One metric with a label `unit`."
+        explanation: "This has the same problem as a `kind` label."
+    correct_option: b
+    explanation: "A label is correct only when the sum over it is meaningful."
+
+  - id: ats050-040-q03
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Recognize an unbounded label"
+    source_readings:
+      - sections/section-040/module-01/course-02-label-design-and-info-metrics.md
+    prompt: "Which label is the most dangerous on a request counter?"
+    options:
+      - id: a
+        text: "`method` with the values GET and POST."
+        explanation: "The set is small and fixed."
+      - id: b
+        text: "`status_class` with five values."
+        explanation: "The set is small and fixed."
+      - id: c
+        text: "`route` with the template of the matched route."
+        explanation: "A template has a bounded set of values."
+      - id: d
+        text: "`user_id` with the identifier of each user."
+        explanation: "Correct. The set grows with every new user and never stops."
+    correct_option: d
+    explanation: "Label values must come from a small set that is known in advance."
+
+  - id: ats050-040-q04
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Expose a version with an info metric"
+    source_readings:
+      - sections/section-040/module-01/course-02-label-design-and-info-metrics.md
+    prompt: "How should the build version `2.4.1` be exposed?"
+    options:
+      - id: a
+        text: "`shop_build_info{version=\"2.4.1\"} 1`"
+        explanation: "Correct. The information is in the label and the value is 1."
+      - id: b
+        text: "`shop_build_version 2.4`"
+        explanation: "The value loses the patch version and cannot be compared meaningfully."
+      - id: c
+        text: "A `version` label on every metric."
+        explanation: "This multiplies the series and clutters results."
+      - id: d
+        text: "A counter that increases at each release."
+        explanation: "It does not state which version runs."
+    correct_option: a
+    explanation: "An info metric carries descriptive data in labels and has the value 1."
+
+  - id: ats050-040-q05
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Describe what a rename does"
+    source_readings:
+      - sections/section-040/module-01/course-03-changing-names-and-reviewing-instrumentation.md
+    prompt: "A team renames a metric and removes the old name in the same release. What happens to an alert rule that still uses the old name?"
+    options:
+      - id: a
+        text: "Prometheus rewrites the rule to the new name."
+        explanation: "Prometheus does not track renames."
+      - id: b
+        text: "The rule reports an error and stops the server."
+        explanation: "A query for a missing series is valid and returns an empty result."
+      - id: c
+        text: "It returns an empty result and does not fire."
+        explanation: "Correct. The rule gets no data, so the alert never fires."
+      - id: d
+        text: "The rule fires immediately."
+        explanation: "An empty result is not true, so nothing fires."
+    correct_option: c
+    explanation: "Run both names during a transition and find the consumers first."
+
+  - id: ats050-040-q06
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Name a recording rule"
+    source_readings:
+      - sections/section-040/module-01/course-03-changing-names-and-reviewing-instrumentation.md
+    prompt: "Which name follows the convention for a recording rule that sums the request rate by route over five minutes?"
+    options:
+      - id: a
+        text: "`route:lab_requests:rate5m`"
+        explanation: "Correct. The labels, the source metric and the operation are separated by colons."
+      - id: b
+        text: "`lab_requests_total_rate`"
+        explanation: "It does not show the kept labels and it keeps a misleading `_total`."
+      - id: c
+        text: "`rate5m`"
+        explanation: "It does not say which metric it comes from."
+      - id: d
+        text: "`lab-requests-route`"
+        explanation: "Hyphens are not valid in metric names."
+    correct_option: a
+    explanation: "Use level, metric and operation, and drop `_total` after `rate()`."
+
+  - id: ats050-040-q07
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Calculate the series count of a metric"
+    source_readings:
+      - sections/section-040/module-02/course-01-what-cardinality-is-and-what-it-costs.md
+    prompt: "A counter has the label `method` with 3 values and `route` with 10 values, and all combinations occur. One instance exposes it. How many series exist?"
+    options:
+      - id: a
+        text: "13"
+        explanation: "This adds the values and does not multiply them."
+      - id: b
+        text: "30"
+        explanation: "Correct. The series count is the product of the label value counts."
+      - id: c
+        text: "3"
+        explanation: "This counts only one label."
+      - id: d
+        text: "300"
+        explanation: "This multiplies by an extra factor that is not in the data."
+    correct_option: b
+    explanation: "Multiply the number of values of each label, and then the number of instances."
+
+  - id: ats050-040-q08
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Calculate the series of a histogram"
+    source_readings:
+      - sections/section-040/module-02/course-01-what-cardinality-is-and-what-it-costs.md
+    prompt: "A histogram has 8 bucket boundaries and an additional `+Inf` bucket. It has no other labels and one instance. How many series does it expose?"
+    options:
+      - id: a
+        text: "9"
+        explanation: "This counts only the bucket series."
+      - id: b
+        text: "11"
+        explanation: "Correct. It has 9 bucket series plus `_sum` and `_count`."
+      - id: c
+        text: "8"
+        explanation: "This counts only the boundaries."
+      - id: d
+        text: "1"
+        explanation: "A histogram is not one series."
+    correct_option: b
+    explanation: "A histogram has its bucket count plus two series for each label combination."
+
+  - id: ats050-040-q09
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Explain the cost after a burst of unique values"
+    source_readings:
+      - sections/section-040/module-02/course-01-what-cardinality-is-and-what-it-costs.md
+    prompt: "A bug created many unique label values for ten minutes and was fixed. Why does the server still show higher load?"
+    options:
+      - id: a
+        text: "The series stay in memory in the head block until compaction and on disk until retention ends."
+        explanation: "Correct. The cost remains after the values stop appearing."
+      - id: b
+        text: "Prometheus keeps sending the values to the target."
+        explanation: "Prometheus does not send values to targets."
+      - id: c
+        text: "Stale series are charged to the next scrape."
+        explanation: "There is no such charge."
+      - id: d
+        text: "The limit `sample_limit` stores them again."
+        explanation: "A limit does not store anything."
+    correct_option: a
+    explanation: "Series cost memory until the head block is compacted and disk until retention ends."
+
+  - id: ats050-040-q10
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Find the metric with the most series"
+    source_readings:
+      - sections/section-040/module-02/course-02-finding-high-cardinality.md
+    prompt: "Which tool lists the metric names and label names with the most series in the head block?"
+    options:
+      - id: a
+        text: "The `up` metric."
+        explanation: "`up` shows only whether a scrape succeeded."
+      - id: b
+        text: "The endpoint `/api/v1/status/tsdb`."
+        explanation: "Correct. It returns the top lists by series count and by label value count."
+      - id: c
+        text: "The endpoint `/-/ready`."
+        explanation: "It reports readiness only."
+      - id: d
+        text: "The query `rate(up[5m])`."
+        explanation: "It does not count series."
+    correct_option: b
+    explanation: "Use the TSDB status API to find the metric and label to fix."
+
+  - id: ats050-040-q11
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Describe the effect of exceeding a sample limit"
+    source_readings:
+      - sections/section-040/module-02/course-03-controlling-cardinality.md
+    prompt: "A scrape job has `sample_limit: 100` and the target returns 150 samples. What happens?"
+    options:
+      - id: a
+        text: "The first 100 samples are stored."
+        explanation: "A limit does not keep a part of the samples."
+      - id: b
+        text: "The scrape fails as a whole, nothing is stored and `up` is 0."
+        explanation: "Correct. A limit is a circuit breaker for the whole scrape."
+      - id: c
+        text: "The extra 50 samples are dropped and `up` stays 1."
+        explanation: "Prometheus does not drop only the extra samples."
+      - id: d
+        text: "Prometheus raises the limit to 150."
+        explanation: "Limits are never raised automatically."
+    correct_option: b
+    explanation: "A scrape over the limit stores nothing, so set the limit with a margin."
+
+  - id: ats050-040-q12
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Judge the risk of dropping a label"
+    source_readings:
+      - sections/section-040/module-02/course-03-controlling-cardinality.md
+    prompt: "A rule with `labeldrop` removes `user_id` from `a{user_id=\"1\"}`, `a{user_id=\"2\"}` and `a{user_id=\"3\"}`. What is the result?"
+    options:
+      - id: a
+        text: "The three series become one series with the sum of the values."
+        explanation: "Prometheus does not add values."
+      - id: b
+        text: "The three series become one series and Prometheus keeps only one of the values."
+        explanation: "Correct. The series collide and the rest are rejected, which gives wrong data."
+      - id: c
+        text: "The three series stay separate."
+        explanation: "Without the label they have the same identity."
+      - id: d
+        text: "The rule is rejected at start-up."
+        explanation: "The configuration is valid."
+    correct_option: b
+    explanation: "Drop a label only when the remaining labels still identify each sample."

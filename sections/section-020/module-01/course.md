@@ -5,20 +5,22 @@ exam_objectives:
 ---
 # Instrumenting Requests, Work Queues And Dependencies
 
-This module develops instrumenting Requests, Work Queues And Dependencies. Use the explanations to connect intended behavior with responsible components and observable evidence.
+Instrumentation is the work of adding code to a program so that it records what it does. This module explains how to decide what to measure, which metrics describe requests, queues and calls to other systems, and how to keep the measurements honest.
 
 ## Learning Goals
 
-- Define event populations and measurement boundaries.
-- Choose request, error, duration and saturation evidence.
-- Instrument success and failure paths without unbounded labels.
-- Account for nested calls, retries and observer overhead.
+- Tell online-serving, offline-processing and batch systems apart and name the key metrics of each.
+- Instrument a request path with the rate, errors and duration (RED) method.
+- Instrument queues, workers and resources with the utilization, saturation and errors (USE) method.
+- Instrument a call to a dependency so that its failures and delays are visible separately.
+- Use timestamps and in-progress gauges to detect stuck work.
 
 ## Before You Start
 
-Examples illustrate declared relationships and reasoning. No execution environment is required or claimed.
+You need to know what a counter, a gauge and a histogram are, and that Prometheus scrapes metrics over HTTP. The hands-on page uses a probe application and a Prometheus server in a private kind cluster.
 
 ## Reading Order
 
-1. Instrumenting Requests, Work Queues And Dependencies
-2. Summary
+The first part explains what to instrument in each kind of system. The second part covers request metrics. The third part covers queues, workers and dependencies. A guided practice page and a summary close the module.
+
+<!-- astrona:playground -->

@@ -1,5 +1,6 @@
 version: 1
-approval: PCA requested 2026-10-11; established reading-only scope
+approval: Maintainer requested PCA, CCA and CAPA playgrounds and graded labs on 2026-10-13,
+  superseding the earlier reading-only scope.
 course:
   id: ATS050
   certification:
@@ -14,7 +15,7 @@ course:
     - Exporters
     - Structuring and naming metrics
 defaults:
-  playground: false
+  playground: true
   module_lab: false
   capstone: false
   section_quiz: false
@@ -36,11 +37,23 @@ sections:
     - Evaluate concurrent collection, multi-process support and exposition cost.
     outline:
     - Client Libraries, Registries And Metric Lifecycle
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
       adapted_from: null
+    - reading: sections/section-010/module-01/course-02-guided-practice.md
+      adapted_from: null
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-01/labs/lab-01
+      after_reading: sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
+      objective: Evaluate the required expression and preserve its labels, values
+        and evaluation time.
+      status: draft
+      runtime_verification: pending
+    practice_readings:
+    - sections/section-010/module-01/course-02-guided-practice.md
 - id: section-020
   title: Instrumentation
   curriculum_item: Instrumentation
@@ -56,11 +69,23 @@ sections:
     - Account for nested calls, retries and observer overhead.
     outline:
     - Instrumenting Requests, Work Queues And Dependencies
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
       adapted_from: null
+    - reading: sections/section-020/module-01/course-02-guided-practice.md
+      adapted_from: null
+    labs:
+    - id: lab-01
+      path: sections/section-020/module-01/labs/lab-01
+      after_reading: sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
+      objective: Evaluate the required expression and preserve its labels, values
+        and evaluation time.
+      status: draft
+      runtime_verification: pending
+    practice_readings:
+    - sections/section-020/module-01/course-02-guided-practice.md
 - id: section-030
   title: Exporters
   curriculum_item: Exporters
@@ -76,11 +101,23 @@ sections:
     - Control collection cost, credentials and partial failure evidence.
     outline:
     - Exporters, Target Failure And Multi-Target Probes
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
       adapted_from: null
+    - reading: sections/section-030/module-01/course-02-guided-practice.md
+      adapted_from: null
+    labs:
+    - id: lab-01
+      path: sections/section-030/module-01/labs/lab-01
+      after_reading: sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
+      objective: Evaluate the required expression and preserve its labels, values
+        and evaluation time.
+      status: draft
+      runtime_verification: pending
+    practice_readings:
+    - sections/section-030/module-01/course-02-guided-practice.md
 - id: section-040
   title: Structuring and naming metrics
   curriculum_item: Structuring and naming metrics
@@ -96,8 +133,20 @@ sections:
     - Evaluate compatibility when changing instrumentation contracts.
     outline:
     - Metric Names, Units And Stable Label Design
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
       adapted_from: null
+    - reading: sections/section-040/module-01/course-02-guided-practice.md
+      adapted_from: null
+    labs:
+    - id: lab-01
+      path: sections/section-040/module-01/labs/lab-01
+      after_reading: sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
+      objective: Evaluate the required expression and preserve its labels, values
+        and evaluation time.
+      status: draft
+      runtime_verification: pending
+    practice_readings:
+    - sections/section-040/module-01/course-02-guided-practice.md

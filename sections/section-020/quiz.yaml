@@ -1,0 +1,289 @@
+# Knowledge check for section 020. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats050-020
+course_id: ATS050
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: section
+  id: section-020
+  title: "Instrumentation"
+questions:
+  - id: ats050-020-q01
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Name the three RED signals of a request path"
+    source_readings:
+      - sections/section-020/module-01/course-02-request-metrics.md
+    prompt: "Which three signals does the RED method describe for a service that handles requests?"
+    options:
+      - id: a
+        text: "Rate, errors and duration"
+        explanation: "Correct. Rate is requests per second, errors are failed requests and duration is the time they take."
+      - id: b
+        text: "Utilization, saturation and errors"
+        explanation: "These are the signals of the USE method, which applies to resources."
+      - id: c
+        text: "Requests, events and deployments"
+        explanation: "These are not the signals of a standard method."
+      - id: d
+        text: "Latency, traffic, saturation and memory"
+        explanation: "This is not the RED method."
+    correct_option: a
+    explanation: "RED stands for rate, errors and duration."
+
+  - id: ats050-020-q02
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Name the three USE signals of a resource"
+    source_readings:
+      - sections/section-020/module-01/course-03-queues-workers-and-dependencies.md
+    prompt: "A team instruments a worker pool. Which three signals does the USE method ask for?"
+    options:
+      - id: a
+        text: "Rate, errors and duration"
+        explanation: "These are the RED signals for request paths."
+      - id: b
+        text: "Utilization, saturation and errors"
+        explanation: "Correct. These describe how full a resource is, how much work waits and how often the resource fails."
+      - id: c
+        text: "Uptime, scrapes and errors"
+        explanation: "These are not the signals of the USE method."
+      - id: d
+        text: "Users, services and endpoints"
+        explanation: "These are not signals of a standard method."
+    correct_option: b
+    explanation: "USE applies to resources, and RED applies to request paths."
+
+  - id: ats050-020-q03
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Choose the counting point for a request counter"
+    source_readings:
+      - sections/section-020/module-01/course-01-what-to-instrument.md
+      - sections/section-020/module-01/course-02-request-metrics.md
+    prompt: "A request counter is incremented only at the end of the success branch of a handler. What is wrong with the metric `requests_total`?"
+    options:
+      - id: a
+        text: "Nothing. Counters should count successes only."
+        explanation: "A total that excludes failures reports a smaller population than its name states."
+      - id: b
+        text: "It reports fewer requests than were handled, because failed requests are not counted."
+        explanation: "Correct. The name promises all requests, and the code counts only successes."
+      - id: c
+        text: "It must be a gauge."
+        explanation: "The value only grows, so a counter is the right type."
+      - id: d
+        text: "It cannot be scraped."
+        explanation: "The endpoint can expose it. The problem is the meaning of the value."
+    correct_option: b
+    explanation: "Count at completion, on every path, and put the outcome in a bounded label."
+
+  - id: ats050-020-q04
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Write the error ratio as a ratio of rates"
+    source_readings:
+      - sections/section-020/module-01/course-02-request-metrics.md
+    prompt: "Which expression gives the share of requests that failed with a 5xx status class over five minutes?"
+    options:
+      - id: a
+        text: "`sum(requests_total{status_class=\"5xx\"})`"
+        explanation: "A raw cumulative total does not show a share over a window."
+      - id: b
+        text: "`sum(rate(requests_total{status_class=\"5xx\"}[5m])) / sum(rate(requests_total[5m]))`"
+        explanation: "Correct. The ratio of two rates gives the share in the window."
+      - id: c
+        text: "`rate(requests_total[5m]) * 100`"
+        explanation: "This multiplies the total rate and does not isolate failures."
+      - id: d
+        text: "`histogram_quantile(0.5, requests_total)`"
+        explanation: "Quantiles apply to histogram buckets, not to counters."
+    correct_option: b
+    explanation: "Divide the rate of failures by the rate of all requests."
+
+  - id: ats050-020-q05
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Aggregate histogram buckets before estimating a percentile"
+    source_readings:
+      - sections/section-020/module-01/course-02-request-metrics.md
+    prompt: "A service runs on three instances. How is the 95th percentile of duration estimated correctly?"
+    options:
+      - id: a
+        text: "Average the three per-instance 95th percentiles."
+        explanation: "A percentile cannot be averaged. The result has no statistical meaning."
+      - id: b
+        text: "Apply `histogram_quantile` to the bucket rates summed over instances with `sum by (le)`."
+        explanation: "Correct. Adding the buckets first gives the distribution of all requests."
+      - id: c
+        text: "Take the highest per-instance average duration."
+        explanation: "An average is not a percentile."
+      - id: d
+        text: "Use a gauge for the percentile in each instance."
+        explanation: "Per-instance gauges cannot be combined into a correct percentile."
+    correct_option: b
+    explanation: "Sum the bucket rates by `le`, then estimate the quantile."
+
+  - id: ats050-020-q06
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Interpret queue depth together with drain rate"
+    source_readings:
+      - sections/section-020/module-01/course-03-queues-workers-and-dependencies.md
+    prompt: "A queue depth gauge shows 100 items. What else is needed to judge whether this is a problem?"
+    options:
+      - id: a
+        text: "Nothing, because 100 is always too high."
+        explanation: "The same depth can be harmless or serious depending on the speed of the workers."
+      - id: b
+        text: "The rates of added and finished items, and the waiting time."
+        explanation: "Correct. They show how fast the queue drains and what users experience."
+      - id: c
+        text: "The version of the client library."
+        explanation: "The version does not tell whether the queue drains."
+      - id: d
+        text: "The number of labels on the gauge."
+        explanation: "Labels do not describe the drain speed."
+    correct_option: b
+    explanation: "Depth without flow and waiting time cannot separate a healthy backlog from a stuck queue."
+
+  - id: ats050-020-q07
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Use a last-success timestamp to detect work that stopped"
+    source_readings:
+      - sections/section-020/module-01/course-03-queues-workers-and-dependencies.md
+    prompt: "An hourly job must raise an alert when it stops. Which design detects this reliably?"
+    options:
+      - id: a
+        text: "A counter of runs with an alert on a rate of zero over one minute."
+        explanation: "A counter that grows once per hour is flat between runs, so this alert fires constantly."
+      - id: b
+        text: "A gauge with the Unix time of the last success and an alert on `time()` minus that value."
+        explanation: "Correct. The age grows when the job stops, whatever the reason."
+      - id: c
+        text: "A histogram of run durations."
+        explanation: "A histogram does not show that runs stopped."
+      - id: d
+        text: "An alert on the `up` metric of the job."
+        explanation: "A job that has ended is not a scrape target, so `up` does not describe it."
+    correct_option: b
+    explanation: "Compare the age of the last success with the schedule plus a margin."
+
+  - id: ats050-020-q08
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Explain why a scrape can miss a short-lived job"
+    source_readings:
+      - sections/section-020/module-02/course-01-why-pull-fails-for-batch-jobs.md
+    prompt: "A job runs for four seconds, and Prometheus scrapes every 15 seconds. What is the main problem?"
+    options:
+      - id: a
+        text: "The job is too fast for Prometheus to parse its metrics."
+        explanation: "Parsing speed is not the problem. The target is gone before it is scraped."
+      - id: b
+        text: "A scrape may never land while the process is alive, so Prometheus never sees its metrics."
+        explanation: "Correct. Pull needs a target that outlives the scrape interval."
+      - id: c
+        text: "Prometheus cannot scrape targets that use HTTP."
+        explanation: "HTTP is the normal scrape protocol."
+      - id: d
+        text: "Counters cannot be used in batch jobs."
+        explanation: "Counters are not the cause of the missed scrape."
+    correct_option: b
+    explanation: "Short-lived jobs push their result to a gateway that Prometheus scrapes."
+
+  - id: ats050-020-q09
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Choose the HTTP method that replaces a whole group"
+    source_readings:
+      - sections/section-020/module-02/course-02-groups-and-http-methods.md
+    prompt: "A job must leave its group with exactly the metrics of its last run, and must remove all older metrics of the group. Which request does this?"
+    options:
+      - id: a
+        text: "POST to the group path"
+        explanation: "POST replaces only the metrics named in the body and leaves the others."
+      - id: b
+        text: "PUT to the group path"
+        explanation: "Correct. PUT replaces the whole group with the metrics in the body."
+      - id: c
+        text: "GET on the group path"
+        explanation: "GET reads data and does not change a group."
+      - id: d
+        text: "DELETE on the group path with a body"
+        explanation: "DELETE removes the whole group and takes no body."
+    correct_option: b
+    explanation: "PUT replaces the group, POST replaces only the named metrics and DELETE removes the group."
+
+  - id: ats050-020-q10
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Explain honor_labels for the Pushgateway scrape job"
+    source_readings:
+      - sections/section-020/module-02/course-02-groups-and-http-methods.md
+    prompt: "Queries for `{job=\"nightly_backup\"}` return nothing, but `{exported_job=\"nightly_backup\"}` returns the data. What is the cause?"
+    options:
+      - id: a
+        text: "The job pushed the wrong metric type."
+        explanation: "The metric type does not rename labels."
+      - id: b
+        text: "The scrape job for the Pushgateway lacks `honor_labels: true`."
+        explanation: "Correct. Prometheus kept its own `job` label and renamed the scraped one."
+      - id: c
+        text: "The Pushgateway expired the group."
+        explanation: "The Pushgateway does not expire groups, and the data is present under another label."
+      - id: d
+        text: "The body had no final newline."
+        explanation: "Such a push would have been refused and no data would exist."
+    correct_option: b
+    explanation: "Set `honor_labels: true` so that the pushed job and instance labels are kept."
+
+  - id: ats050-020-q11
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "State what the up metric means for the Pushgateway target"
+    source_readings:
+      - sections/section-020/module-02/course-02-groups-and-http-methods.md
+    prompt: "The `up` metric of the Pushgateway scrape job is 1, but the nightly backup has not run for days. Why does `up` not show it?"
+    options:
+      - id: a
+        text: "Because `up` measures the backup indirectly."
+        explanation: "The metric describes only whether the scrape of the gateway succeeded."
+      - id: b
+        text: "Because `up` describes the scrape of the gateway, not the batch jobs."
+        explanation: "Correct. Use the timestamp metrics to judge the jobs."
+      - id: c
+        text: "Because the Pushgateway sets `up` to 1 for all groups."
+        explanation: "The gateway does not set `up`. Prometheus does."
+      - id: d
+        text: "Because `up` is only reset by DELETE."
+        explanation: "The metric is set by each scrape."
+    correct_option: b
+    explanation: "Alert on the age of a timestamp such as `push_time_seconds` or the job's own success timestamp."
+
+  - id: ats050-020-q12
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Remove stale data from the Pushgateway"
+    source_readings:
+      - sections/section-020/module-02/course-03-limits-and-cleanup.md
+    prompt: "A job was retired a year ago, but its last values still appear in Prometheus. What is the correct action?"
+    options:
+      - id: a
+        text: "Wait until the Pushgateway expires them."
+        explanation: "The Pushgateway never expires pushed data."
+      - id: b
+        text: "Send DELETE to the exact group path that the job used."
+        explanation: "Correct. DELETE removes the whole group, and the series become stale after the next scrape."
+      - id: c
+        text: "Restart Prometheus."
+        explanation: "Prometheus scrapes the stale values again from the gateway."
+      - id: d
+        text: "Send POST with an empty body."
+        explanation: "POST with an empty body does not remove the group."
+    correct_option: b
+    explanation: "Add the DELETE to the retirement process of every job that pushes."

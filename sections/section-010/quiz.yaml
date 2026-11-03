@@ -1,0 +1,289 @@
+# Knowledge check for section 010. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats050-010
+course_id: ATS050
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: section
+  id: section-010
+  title: "Client Libraries"
+questions:
+  - id: ats050-010-q01
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Choose the metric type that matches the meaning of a quantity"
+    source_readings:
+      - sections/section-010/module-02/course-01-the-four-core-metric-types.md
+    prompt: "A service wants to record the number of client connections that are open right now. Connections open and close all the time. Which metric type fits?"
+    options:
+      - id: a
+        text: "Counter"
+        explanation: "A counter only increases, so it cannot report a level that falls when connections close."
+      - id: b
+        text: "Gauge"
+        explanation: "Correct. A gauge can go up and down and reports a current state."
+      - id: c
+        text: "Histogram"
+        explanation: "A histogram records the distribution of observed values, not a current count."
+      - id: d
+        text: "Summary"
+        explanation: "A summary reports quantiles of observations, not a current count."
+    correct_option: b
+    explanation: "A value that can fall while the process is healthy is a gauge."
+
+  - id: ats050-010-q02
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Explain why rate() or increase() must be applied to a counter"
+    source_readings:
+      - sections/section-010/module-01/course-03-process-lifecycle-and-safe-collection.md
+    prompt: "After a deployment, the raw value of `requests_total` is far lower than before. What is the correct interpretation?"
+    options:
+      - id: a
+        text: "Traffic fell sharply."
+        explanation: "The counter returns to zero when the process restarts, so a low raw value says nothing about traffic."
+      - id: b
+        text: "The counter restarted from zero, and rate() or increase() treat the drop as a reset."
+        explanation: "Correct. Prometheus detects the decrease between samples and continues the calculation."
+      - id: c
+        text: "Prometheus lost data."
+        explanation: "Prometheus keeps the samples it scraped. The drop is the application restart."
+      - id: d
+        text: "The metric type changed to a gauge."
+        explanation: "The type does not change on restart."
+    correct_option: b
+    explanation: "Counters live in process memory and restart from zero. Query functions handle the reset."
+
+  - id: ats050-010-q03
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Explain what the registry enforces and why metrics are created once"
+    source_readings:
+      - sections/section-010/module-01/course-02-registries-and-label-children.md
+    prompt: "A request handler creates and registers a new counter named `jobs_total` every time it runs. What happens?"
+    options:
+      - id: a
+        text: "Each call creates a separate series with the same name."
+        explanation: "The registry does not allow two families with the same name and an identical definition."
+      - id: b
+        text: "The second registration fails with a duplicate registration error."
+        explanation: "Correct. The first call registers the family. Later calls collide with it."
+      - id: c
+        text: "The library merges the counters."
+        explanation: "Libraries do not merge duplicate registrations."
+      - id: d
+        text: "Prometheus rejects the target."
+        explanation: "The failure happens in the application, before Prometheus is involved."
+    correct_option: b
+    explanation: "Create each metric once at start-up and reuse the object."
+
+  - id: ats050-010-q04
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Diagnose an endpoint that is healthy but lacks application metrics"
+    source_readings:
+      - sections/section-010/module-01/course-02-registries-and-label-children.md
+    prompt: "The `/metrics` endpoint returns status 200 and valid text, and `up` is 1, but none of the application metrics appear. The code updates metrics in a custom registry. What is the most likely cause?"
+    options:
+      - id: a
+        text: "The scrape interval is too short."
+        explanation: "A short interval does not remove series."
+      - id: b
+        text: "The exposition handler serves a different registry than the one that the code updates."
+        explanation: "Correct. The handler only outputs what its registry holds."
+      - id: c
+        text: "Counters cannot be exposed from custom registries."
+        explanation: "Custom registries are supported."
+      - id: d
+        text: "The metric names contain underscores."
+        explanation: "Underscores are valid in metric names."
+    correct_option: b
+    explanation: "The handler must serve the registry that holds the metrics."
+
+  - id: ats050-010-q05
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Bound label children and recognize unbounded labels"
+    source_readings:
+      - sections/section-010/module-01/course-02-registries-and-label-children.md
+    prompt: "Which label is the most dangerous to put on a request counter?"
+    options:
+      - id: a
+        text: "`method` with values GET and POST"
+        explanation: "This set is small and bounded."
+      - id: b
+        text: "`status_class` with values 2xx, 4xx and 5xx"
+        explanation: "This set is small and bounded."
+      - id: c
+        text: "`user_id` with one value for each user"
+        explanation: "Correct. Each new value creates a child that stays in memory and a new series."
+      - id: d
+        text: "`route` with normalized templates such as /orders/{id}"
+        explanation: "Templates are bounded by the number of routes."
+    correct_option: c
+    explanation: "Unbounded label values create state in the application and series in Prometheus."
+
+  - id: ats050-010-q06
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Choose a design for a Python server with several worker processes"
+    source_readings:
+      - sections/section-010/module-01/course-03-process-lifecycle-and-safe-collection.md
+    prompt: "A Python server runs four worker processes. Two consecutive scrapes show a counter going from 500 to 300 and back to 510. What explains this?"
+    options:
+      - id: a
+        text: "Each scrape reached a different worker with its own registry."
+        explanation: "Correct. Without multiprocess support, one worker answers each scrape with only its own values."
+      - id: b
+        text: "The counter type does not support concurrency."
+        explanation: "Counters are thread safe. The cause is separate process memory."
+      - id: c
+        text: "Prometheus randomizes sample values."
+        explanation: "Prometheus stores what it scrapes."
+      - id: d
+        text: "The histogram buckets were reset."
+        explanation: "No histogram is involved in the description."
+    correct_option: a
+    explanation: "Use the library multiprocess mode or a scrape target for each worker."
+
+  - id: ats050-010-q07
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Describe the structure of a histogram"
+    source_readings:
+      - sections/section-010/module-02/course-02-histograms-and-summaries.md
+    prompt: "A histogram has `le=\"0.1\"` with value 240, `le=\"0.5\"` with value 390 and `le=\"+Inf\"` with value 400. How many observations were greater than 0.1 and at most 0.5?"
+    options:
+      - id: a
+        text: "390"
+        explanation: "This is the cumulative count up to 0.5, which includes the observations up to 0.1."
+      - id: b
+        text: "150"
+        explanation: "Correct. Buckets are cumulative, so subtract 240 from 390."
+      - id: c
+        text: "240"
+        explanation: "This is the count up to 0.1."
+      - id: d
+        text: "10"
+        explanation: "This is the count above 0.5."
+    correct_option: b
+    explanation: "Subtract neighboring cumulative buckets to get the count in one range."
+
+  - id: ats050-010-q08
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Compare histograms and summaries for fleet-wide percentiles"
+    source_readings:
+      - sections/section-010/module-02/course-01-the-four-core-metric-types.md
+      - sections/section-010/module-02/course-02-histograms-and-summaries.md
+    prompt: "A service runs on twelve instances and needs one 99th percentile for the whole service. Which design is correct?"
+    options:
+      - id: a
+        text: "A summary on each instance, then the average of the twelve quantiles"
+        explanation: "The average of quantiles is not the quantile of the combined data."
+      - id: b
+        text: "A histogram with the same bounds on each instance, then histogram_quantile over the summed bucket rates"
+        explanation: "Correct. Bucket rates can be added across instances before the estimate."
+      - id: c
+        text: "A gauge that stores the last request duration"
+        explanation: "A gauge holds one value and cannot describe a distribution."
+      - id: d
+        text: "A counter that stores total duration"
+        explanation: "A total gives an average, not a percentile."
+    correct_option: b
+    explanation: "Histogram buckets are counters that can be added. Summary quantiles cannot."
+
+  - id: ats050-010-q09
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Calculate an average from histogram series"
+    source_readings:
+      - sections/section-010/module-02/course-02-histograms-and-summaries.md
+    prompt: "Which query gives the average request duration over the last five minutes?"
+    options:
+      - id: a
+        text: "`rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])`"
+        explanation: "Correct. The rate of the sum divided by the rate of the count is the mean for the window."
+      - id: b
+        text: "`http_request_duration_seconds_sum / http_request_duration_seconds_count`"
+        explanation: "This gives the average since the process started."
+      - id: c
+        text: "`avg(http_request_duration_seconds_bucket)`"
+        explanation: "This averages bucket counters and has no meaning."
+      - id: d
+        text: "`histogram_quantile(0.5, http_request_duration_seconds_sum)`"
+        explanation: "The function needs bucket series, and the median is not the mean."
+    correct_option: a
+    explanation: "Both series are counters, so use rates over a window."
+
+  - id: ats050-010-q10
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Read the text exposition format and identify what breaks a scrape"
+    source_readings:
+      - sections/section-010/module-02/course-03-text-exposition-format.md
+    prompt: "A response contains the line `shop_orders_total{channel=\"web\"} twelve`. What does Prometheus do?"
+    options:
+      - id: a
+        text: "It stores the value as 0."
+        explanation: "Prometheus does not guess a number."
+      - id: b
+        text: "It fails the scrape, and the target is marked as down for that interval."
+        explanation: "Correct. A line that cannot be parsed breaks the scrape."
+      - id: c
+        text: "It skips only that line."
+        explanation: "The parser treats the response as invalid."
+      - id: d
+        text: "It converts the value to a string label."
+        explanation: "Values must be floats."
+    correct_option: b
+    explanation: "The format is strict. One bad line fails the whole scrape."
+
+  - id: ats050-010-q11
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Explain OpenMetrics differences and format negotiation"
+    source_readings:
+      - sections/section-010/module-02/course-03-text-exposition-format.md
+    prompt: "Which statement about OpenMetrics and the classic text format is correct?"
+    options:
+      - id: a
+        text: "The target picks the format from the Accept header, and an OpenMetrics response must end with # EOF."
+        explanation: "Correct. Prometheus lists the formats it accepts, and the target answers with one of them."
+      - id: b
+        text: "Prometheus ignores the Content-Type header and always parses the classic format."
+        explanation: "Prometheus parses the body according to the Content-Type."
+      - id: c
+        text: "OpenMetrics removes the _total suffix from counters."
+        explanation: "OpenMetrics requires the _total suffix on counter samples."
+      - id: d
+        text: "The classic format also requires # EOF."
+        explanation: "The classic format has no terminator line."
+    correct_option: a
+    explanation: "Content negotiation chooses the format, and the # EOF line marks a complete OpenMetrics body."
+
+  - id: ats050-010-q12
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Keep collection cheap and safe"
+    source_readings:
+      - sections/section-010/module-01/course-03-process-lifecycle-and-safe-collection.md
+    prompt: "A custom collector runs a database query that takes 20 seconds, and the scrape timeout is 10 seconds. What is the result?"
+    options:
+      - id: a
+        text: "Prometheus waits 20 seconds."
+        explanation: "The scrape timeout ends the request."
+      - id: b
+        text: "The scrape fails, up becomes 0 and the metrics for that interval are lost."
+        explanation: "Correct. A slow collector makes the scrape time out."
+      - id: c
+        text: "The library caches the old value automatically."
+        explanation: "Libraries do not cache collector results."
+      - id: d
+        text: "Prometheus retries until it succeeds."
+        explanation: "Prometheus scrapes again at the next interval and does not retry."
+    correct_option: b
+    explanation: "Compute expensive values in a background task and return the stored value from the collector."

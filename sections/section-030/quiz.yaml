@@ -1,0 +1,290 @@
+# Knowledge check for section 030. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats050-030
+course_id: ATS050
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: section
+  id: section-030
+  title: "Exporters"
+questions:
+  - id: ats050-030-q01
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Decide between direct instrumentation and an exporter"
+    source_readings:
+      - sections/section-030/module-01/course-01-translating-state-into-metrics.md
+    prompt: "A team can change the source code of its own service and wants metrics about the requests that it handles. What is the best approach?"
+    options:
+      - id: a
+        text: "Write an exporter that parses its log files."
+        explanation: "Direct instrumentation is simpler and more accurate when the code can be changed."
+      - id: b
+        text: "Add a client library to the service and expose its own metrics."
+        explanation: "Correct. Exporters are for systems that cannot expose metrics themselves."
+      - id: c
+        text: "Use the Pushgateway for every request."
+        explanation: "The Pushgateway is for short-lived batch jobs, not for request metrics."
+      - id: d
+        text: "Run the Node Exporter next to the service."
+        explanation: "The Node Exporter shows machine metrics, not request metrics of a service."
+    correct_option: b
+    explanation: "Use a client library when you control the code, and an exporter when you do not."
+
+  - id: ats050-030-q02
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "State when an exporter collects its data"
+    source_readings:
+      - sections/section-030/module-01/course-01-translating-state-into-metrics.md
+    prompt: "When should an exporter read the state of the system that it represents?"
+    options:
+      - id: a
+        text: "On its own timer, and serve the last result."
+        explanation: "A timer can produce values that are older than the scrape time."
+      - id: b
+        text: "When a scrape request arrives."
+        explanation: "Correct. The values then match the scrape time, and the exporter keeps no stale state."
+      - id: c
+        text: "Only at start-up."
+        explanation: "The values would never change."
+      - id: d
+        text: "Only when the backend sends an event."
+        explanation: "Exporters read state on demand and do not wait for events."
+    correct_option: b
+    explanation: "Collect on scrape, and cache only when collection is expensive and documented."
+
+  - id: ats050-030-q03
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Convert units to base units in an exporter"
+    source_readings:
+      - sections/section-030/module-01/course-01-translating-state-into-metrics.md
+    prompt: "A tool reports a size of 700 megabytes. Which metric design follows the naming rules for exporters?"
+    options:
+      - id: a
+        text: "`backup_size_mb 700`"
+        explanation: "The unit should be a base unit."
+      - id: b
+        text: "`backup_size_bytes 734003200`"
+        explanation: "Correct. The exporter converts to bytes and puts the unit in the name."
+      - id: c
+        text: "`backup_size 700`"
+        explanation: "The unit is missing from the name and the value uses a non-base unit."
+      - id: d
+        text: "`backup_size_megabytes 700`"
+        explanation: "Megabytes are not a base unit."
+    correct_option: b
+    explanation: "Use seconds and bytes, and put the unit in the metric name."
+
+  - id: ats050-030-q04
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Separate the exporter from the backend in the health signals"
+    source_readings:
+      - sections/section-030/module-01/course-01-translating-state-into-metrics.md
+      - sections/section-030/module-01/course-02-scrape-health-and-diagnosis.md
+    prompt: "The database behind an exporter is down, but the exporter process runs. What do `up` and the exporter's own backend gauge show?"
+    options:
+      - id: a
+        text: "`up` is 0 and the backend gauge is 0."
+        explanation: "The scrape of the exporter still works, so `up` is 1."
+      - id: b
+        text: "`up` is 1 and the backend gauge is 0."
+        explanation: "Correct. The exporter answered the scrape and reported that the backend failed."
+      - id: c
+        text: "`up` is 0 and the backend gauge is 1."
+        explanation: "The exporter cannot report a healthy backend that is down."
+      - id: d
+        text: "Both are 1."
+        explanation: "The backend gauge reports the failure."
+    correct_option: b
+    explanation: "Read the scrape signal and the backend signal together."
+
+  - id: ats050-030-q05
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "State what up means"
+    source_readings:
+      - sections/section-030/module-01/course-02-scrape-health-and-diagnosis.md
+    prompt: "A service answers every request with an error but serves `/metrics` normally. What is the value of `up` for its scrape job?"
+    options:
+      - id: a
+        text: "0, because the service is unhealthy."
+        explanation: "`up` describes the scrape, not the health of the work."
+      - id: b
+        text: "1, because the scrape succeeded."
+        explanation: "Correct. The error counter shows the failing work."
+      - id: c
+        text: "It is missing."
+        explanation: "`up` exists for every target that is scraped."
+      - id: d
+        text: "It equals the error ratio."
+        explanation: "`up` is 0 or 1."
+    correct_option: b
+    explanation: "Alert on both a missing scrape and a high error ratio."
+
+  - id: ats050-030-q06
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Detect a target that disappeared"
+    source_readings:
+      - sections/section-030/module-01/course-02-scrape-health-and-diagnosis.md
+    prompt: "A target was removed from the scrape configuration by mistake. Which expression fires an alert?"
+    options:
+      - id: a
+        text: "`up == 0`"
+        explanation: "The removed target has no `up` series, so the comparison returns nothing."
+      - id: b
+        text: "`absent(up{job=\"name\"})`"
+        explanation: "Correct. It returns 1 when no series matches the selector."
+      - id: c
+        text: "`rate(up[5m]) == 0`"
+        explanation: "Rate does not detect a missing series."
+      - id: d
+        text: "`up > 1`"
+        explanation: "`up` is never above 1."
+    correct_option: b
+    explanation: "Use `absent()` for something that must exist."
+
+  - id: ats050-030-q07
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Write the relabeling for a multi-target exporter"
+    source_readings:
+      - sections/section-030/module-01/course-03-multi-target-exporters-and-credentials.md
+    prompt: "In the multi-target pattern, which rule makes Prometheus send the scrape request to the exporter instead of to the probed address?"
+    options:
+      - id: a
+        text: "Copy `__address__` into `__param_target`."
+        explanation: "This passes the target to the exporter as a parameter."
+      - id: b
+        text: "Copy `__param_target` into `instance`."
+        explanation: "This labels the result with the probed address."
+      - id: c
+        text: "Set `__address__` to the exporter address with `replacement`."
+        explanation: "Correct. The scrape then goes to the exporter."
+      - id: d
+        text: "Set `metrics_path` to `/metrics`."
+        explanation: "The path must be `/probe` for this pattern."
+    correct_option: c
+    explanation: "Three rules: target to parameter, target to instance, address to exporter."
+
+  - id: ats050-030-q08
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Interpret a failed probe"
+    source_readings:
+      - sections/section-030/module-01/course-03-multi-target-exporters-and-credentials.md
+    prompt: "A probed address returns status 500. What do `up` and `probe_success` show for this target?"
+    options:
+      - id: a
+        text: "`up` is 0 and `probe_success` is 0."
+        explanation: "The exporter answered the scrape, so `up` is 1."
+      - id: b
+        text: "`up` is 1 and `probe_success` is 0."
+        explanation: "Correct. A failed probe is a valid answer of the exporter."
+      - id: c
+        text: "`up` is 1 and `probe_success` is 1."
+        explanation: "The probe did not pass."
+      - id: d
+        text: "Both series disappear."
+        explanation: "The exporter returns metrics for a failed probe."
+    correct_option: b
+    explanation: "Alert on `probe_success == 0` for failed probes."
+
+  - id: ats050-030-q09
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Name the file rule of the textfile collector"
+    source_readings:
+      - sections/section-030/module-02/course-01-node-exporter-and-the-textfile-collector.md
+    prompt: "Which files does the textfile collector read?"
+    options:
+      - id: a
+        text: "Every file in the directory."
+        explanation: "Only files with the suffix `.prom` are read."
+      - id: b
+        text: "Files that end in `.prom` in the directory named by `--collector.textfile.directory`."
+        explanation: "Correct. Without the flag, it reads nothing."
+      - id: c
+        text: "Files that end in `.txt`."
+        explanation: "The suffix is `.prom`."
+      - id: d
+        text: "Files that the script announces by an HTTP call."
+        explanation: "The collector reads a directory and does not accept calls."
+    correct_option: b
+    explanation: "The directory flag and the `.prom` suffix are both required."
+
+  - id: ats050-030-q10
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Publish a file without a partial read"
+    source_readings:
+      - sections/section-030/module-02/course-02-writing-and-publishing-metric-files.md
+    prompt: "How should a script publish `backup.prom` so that a scrape never reads a half-written file?"
+    options:
+      - id: a
+        text: "Write directly to `backup.prom` and flush often."
+        explanation: "A scrape can still read the file during the write."
+      - id: b
+        text: "Write a temporary file in the same directory and rename it to `backup.prom`."
+        explanation: "Correct. A rename in one file system is atomic."
+      - id: c
+        text: "Write the file in another file system and copy it."
+        explanation: "A copy is not atomic."
+      - id: d
+        text: "Delete the file, then write it again."
+        explanation: "A scrape between the two steps sees no file or a partial one."
+    correct_option: b
+    explanation: "Temporary name in the same directory, then rename."
+
+  - id: ats050-030-q11
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Detect a malformed textfile"
+    source_readings:
+      - sections/section-030/module-02/course-01-node-exporter-and-the-textfile-collector.md
+      - sections/section-030/module-02/course-02-writing-and-publishing-metric-files.md
+    prompt: "A file contains the value `twelve`. Which signal shows the problem while `up` stays at 1?"
+    options:
+      - id: a
+        text: "`node_textfile_scrape_error` becomes 1."
+        explanation: "Correct. The collector reports an error for a file that it cannot parse."
+      - id: b
+        text: "`up` becomes 0."
+        explanation: "The scrape of the exporter still works."
+      - id: c
+        text: "`node_textfile_mtime_seconds` becomes 0."
+        explanation: "The modification time is not set to 0 by a parse error."
+      - id: d
+        text: "Prometheus rejects the whole configuration."
+        explanation: "The configuration is not involved."
+    correct_option: a
+    explanation: "Alert on `node_textfile_scrape_error == 1`."
+
+  - id: ats050-030-q12
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Choose between the textfile collector and the Pushgateway"
+    source_readings:
+      - sections/section-030/module-02/course-03-operating-the-exporter-and-choosing-tools.md
+    prompt: "A nightly check runs on one specific host and reports metrics for that host. A second job runs on any node of a cluster. Which tools fit?"
+    options:
+      - id: a
+        text: "Pushgateway for both, because it is simpler."
+        explanation: "The host-bound job gains the machine `instance` label from the textfile collector."
+      - id: b
+        text: "Textfile collector for the host job and Pushgateway for the cluster job."
+        explanation: "Correct. The first belongs to a machine, and the second does not."
+      - id: c
+        text: "Textfile collector for both."
+        explanation: "The cluster job can run on any node and has no fixed directory."
+      - id: d
+        text: "Neither, because batch jobs cannot be monitored."
+        explanation: "Both tools exist for this purpose."
+    correct_option: b
+    explanation: "Tie machine jobs to the machine and other jobs to the gateway."
