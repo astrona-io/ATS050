@@ -50,7 +50,7 @@ sections:
       after_reading: sections/section-010/module-01/course-01-client-libraries-registries-and-metric-lifecycle.md
       objective: Evaluate the required expression and preserve its labels, values
         and evaluation time.
-      status: draft
+      status: alpha
       runtime_verification: pending
     practice_readings:
     - sections/section-010/module-01/course-02-guided-practice.md
@@ -82,7 +82,7 @@ sections:
       after_reading: sections/section-020/module-01/course-01-instrumenting-requests-work-queues-and-dependencies.md
       objective: Evaluate the required expression and preserve its labels, values
         and evaluation time.
-      status: draft
+      status: alpha
       runtime_verification: pending
     practice_readings:
     - sections/section-020/module-01/course-02-guided-practice.md
@@ -114,7 +114,7 @@ sections:
       after_reading: sections/section-030/module-01/course-01-exporters-target-failure-and-multi-target-probes.md
       objective: Evaluate the required expression and preserve its labels, values
         and evaluation time.
-      status: draft
+      status: alpha
       runtime_verification: pending
     practice_readings:
     - sections/section-030/module-01/course-02-guided-practice.md
@@ -146,7 +146,7 @@ sections:
       after_reading: sections/section-040/module-01/course-01-metric-names-units-and-stable-label-design.md
       objective: Evaluate the required expression and preserve its labels, values
         and evaluation time.
-      status: draft
+      status: alpha
       runtime_verification: pending
     practice_readings:
     - sections/section-040/module-01/course-02-guided-practice.md

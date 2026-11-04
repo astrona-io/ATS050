@@ -3,7 +3,7 @@ kind: question_bank
 id: ats050-domain-review
 course_id: ATS050
 exam_code: PCA
-status: draft
+status: alpha
 provenance: Original practice material; not official examination questions.
 scope:
   type: domain
